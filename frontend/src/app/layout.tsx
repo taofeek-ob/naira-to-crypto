@@ -34,15 +34,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={font.className}>
-        <OnchainProviders>
-          <ThemeProvider>
+    <html suppressHydrationWarning={true} lang="en">
+      <body className={font.className} suppressHydrationWarning={true}>
+        <ThemeProvider>
+          <OnchainProviders>
             <Navbar />
             {children}
             <Footer />
-          </ThemeProvider>
-        </OnchainProviders>
+          </OnchainProviders>
+        </ThemeProvider>
       </body>
     </html>
   );
