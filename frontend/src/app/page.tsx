@@ -24,8 +24,7 @@ export default function Home() {
             </div>
             <h1 className="md:text-7xl my-4 font-extrabold text-4xl md:leading-tight">Convert your naira to crypto through bank transfer</h1>
             <p className="mx-auto my-4 text-sm w-full max-w-xl text-center font-medium leading-relaxed tracking-wide">
-              Effortlessly exchange Naira for crypto, enabling secure and fast transactions in the onchain economy. Built on a base sepolia network,
-              our platform simplifies currency exchange, empowering users to trade and participate in the global crypto space.
+              Effortlessly exchange Naira for crypto in seconds on the base sepolia network.
             </p>
             <div className="flex flex-row justify-center items-center space-x-4 my-8">
               <Button>
