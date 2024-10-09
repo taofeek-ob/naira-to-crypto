@@ -1,17 +1,19 @@
 
-
-```markdown
 # Naira to Crypto Service
 
-A simple and efficient service that enables users to convert Naira to USDT and execute transfersvia bank transfer. This application is built with Express, Ethers.js, and Nodemailer, making it easy to handle Ethereum transactions and send email notifications.
+A simple and efficient service that enables users to convert Naira to USDT and execute transfers via bank transfer. This application is built with Express, Ethers.js, and Nodemailer, making it easy to handle Ethereum transactions and send email notifications.
 
 ## Table of Contents
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Configuration](#configuration)
 - [API Endpoints](#api-endpoints)
+  - [GET `/`](#get-)
+  - [POST `/webhook`](#post-webhook)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -123,4 +125,3 @@ Contributions are welcome! Please follow these steps:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
