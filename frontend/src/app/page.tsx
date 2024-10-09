@@ -48,7 +48,7 @@ export default function Home() {
         <div className="container mx-auto text-center">
           <div className="my-24">
             <h5 className="text-primary">Why Naira to Crypto Stands Out?</h5>
-            <h2 className="text-4xl font-extrabold my-4">Unlock the Full Potential of Onchain Economy with Our Platform</h2>
+            <h2 className="text-4xl font-extrabold my-4">Get Onboard the Onchain Economy Faster</h2>
 
             <div className="flex flex-col md:flex-row gap-4 mt-12">
               {features.map((feature) => (

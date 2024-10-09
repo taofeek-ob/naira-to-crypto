@@ -27,8 +27,7 @@ export const metadata: Metadata = {
   description: "Convert naira to crypto in seconds through bank transfer",
   openGraph: {
     title: "Convert naira to crypto in seconds through bank transfer",
-    description: "Built with OnchainKit",
-    images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
+    description: "Built with OnchainKit for Base Africa Buildathon 2024",
   },
 };
 
