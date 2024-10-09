@@ -4,7 +4,7 @@ export const footerLinks = [
     label: "Home",
   },
   {
-    href: "/code",
+    href: "/",
     label: "About",
   },
 ];

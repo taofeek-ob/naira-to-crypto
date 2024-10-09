@@ -9,6 +9,6 @@ export const navLinks = [
   },
   {
     title: "Code",
-    href: "/github.com",
+    href: "/",
   },
 ];
