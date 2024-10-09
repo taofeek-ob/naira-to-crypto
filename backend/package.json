@@ -3,10 +3,6 @@
   "module": "index.js",
   "version": "0.0.1",
   "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -14,7 +10,11 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@safe-global/protocol-kit": "^5.0.1",
+    "@safe-global/protocol-kit": "^4.1.1",
+    "@safe-global/safe-core-sdk": "^3.3.5",
+    "@safe-global/safe-ethers-lib": "^1.9.4",
+    "ethers": "^6.13.2",
+    "express": "^4.21.0",
     "mongoose": "^8.7.0",
     "nodemailer": "^6.9.15"
   }
