@@ -107,10 +107,10 @@ app.post("/webhook", async (req, res) => {
     const { _id, walletAddress } = await getUserByEmail(email);
 
     // Calculate the amount of USDT to send
-    const usdtAmount = await getUSDTConversion(amountNaira);
+    const amountUSDT = (await getUSDTConversion(amountNaira)).toFixed(1);
 
     // Execute the transfer via Gnosis Safe
-    const { transactionHash, amountUSDT } = await executeTransfer(walletAddress, usdtAmount);
+    const { transactionHash } = await executeTransfer(walletAddress, amountUSDT);
 
     // Save transaction in MongoDB
     const data = {
@@ -183,7 +183,7 @@ async function executeTransfer(to, amountUSDT) {
   const usdtContract = new ethers.Contract(usdtTokenAddress, usdtAbi, signer);
 
   // Encode the transfer transaction
-  const transferData = usdtContract.interface.encodeFunctionData("transfer", [to, ethers.parseUnits(amountUSDT.toFixed(1), 6)]);
+  const transferData = usdtContract.interface.encodeFunctionData("transfer", [to, ethers.parseUnits(amountUSDT, 6)]);
   const safeTransactionData = {
     to: usdtTokenAddress,
     value: "0",
@@ -205,7 +205,6 @@ async function executeTransfer(to, amountUSDT) {
   // Return the transaction hash and amount transferred
   return {
     transactionHash: executeTxResponse.hash,
-    amountUSDT,
   };
 }
 
