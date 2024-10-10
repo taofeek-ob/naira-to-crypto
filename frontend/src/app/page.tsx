@@ -30,7 +30,7 @@ export default function Home() {
             </p>
             <div className="flex flex-row justify-center items-center space-x-4 my-8">
               <Button>
-                <Link href="/"> Get Started</Link>
+                <Link href="/login"> Get Started</Link>
               </Button>
               <Button variant="secondary">Learn More</Button>
             </div>
