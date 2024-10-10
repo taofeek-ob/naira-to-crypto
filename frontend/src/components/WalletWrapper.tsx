@@ -1,39 +1,28 @@
-'use client';
-import {
-  Address,
-  Avatar,
-  EthBalance,
-  Identity,
-  Name,
-} from '@coinbase/onchainkit/identity';
+"use client";
+import { Address, Avatar, EthBalance, Identity, Name } from "@coinbase/onchainkit/identity";
 import {
   ConnectWallet,
+  ConnectWalletText,
   Wallet,
   WalletDropdown,
   WalletDropdownBasename,
   WalletDropdownDisconnect,
   WalletDropdownFundLink,
   WalletDropdownLink,
-} from '@coinbase/onchainkit/wallet';
+} from "@coinbase/onchainkit/wallet";
 
 type WalletWrapperParams = {
   text?: string;
   className?: string;
   withWalletAggregator?: boolean;
 };
-export default function WalletWrapper({
-  className,
-  text,
-  withWalletAggregator = false,
-}: WalletWrapperParams) {
+export default function WalletWrapper({ className, text, withWalletAggregator = false }: WalletWrapperParams) {
   return (
     <>
-      <Wallet>
-        <ConnectWallet
-          withWalletAggregator={withWalletAggregator}
-          text={text}
-          className={className}
-        >
+      <Wallet className="mx-auto">
+        <ConnectWallet withWalletAggregator={withWalletAggregator} className={className}>
+          <ConnectWalletText>{text}</ConnectWalletText>
+
           <Avatar className="h-6 w-6" />
           <Name />
         </ConnectWallet>

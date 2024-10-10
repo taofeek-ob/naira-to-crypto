@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { features } from "@/data/features";
+import Navbar from "@/components/layout/Navbar";
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       <div className="border-b border-border">
         <main className="container mx-auto">
           <div className="relative md:mt-24 mx-auto w-full max-w-4xl pt-4 text-center">

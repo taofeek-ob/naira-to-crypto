@@ -6,7 +6,6 @@ import "./global.css";
 import "@coinbase/onchainkit/styles.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
-import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/app/theme-provider";
 
 import Footer from "@/components/layout/Footer";
@@ -37,7 +36,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={font.className} suppressHydrationWarning={true}>
         <ThemeProvider>
           <OnchainProviders>
-            <Navbar />
             {children}
             <Footer />
           </OnchainProviders>
