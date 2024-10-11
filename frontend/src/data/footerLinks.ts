@@ -4,7 +4,7 @@ export const footerLinks = [
     label: "Home",
   },
   {
-    href: "/",
-    label: "About",
+    href: "https://github.com/taofeek-ob/naira-to-crypto",
+    label: "Code",
   },
 ];

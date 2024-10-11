@@ -9,6 +9,6 @@ export const navLinks = [
   },
   {
     title: "Code",
-    href: "/",
+    href: "https://github.com/taofeek-ob/naira-to-crypto",
   },
 ];

@@ -15,7 +15,7 @@ export default function DashboardComponent({ user, transactions }) {
       <Navbar address={user.walletAddress} />
       <div className="flex flex-col min-h-screen w-full p-4">
         {/* Welcome header */}
-        <header className="h-14 flex items-center border-b mb-8">
+        <header className="h-14 flex items-center mb-8">
           <h1 className="text-3xl font-bold">Welcome, {user.fullName}</h1>
         </header>
 
