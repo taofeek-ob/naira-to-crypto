@@ -42,6 +42,8 @@ A simple and efficient service that enables users to convert Naira to USDT and e
 - Node.js installed on your machine
 - MongoDB database for storing user and transaction data
 - Access to the Ethereum network (Infura or Alchemy)
+- Gnosis Safe Address is at https://sepolia.basescan.org/address/0x1193e35A5D7ae8064BDF7dA655Cf6af1724C803F
+- USDT Testnet Token at: https://sepolia.basescan.org/address/0x323e78f944A9a1FcF3a10efcC5319DBb0bB6e673
 
 ### Installation
 
@@ -56,7 +58,7 @@ A simple and efficient service that enables users to convert Naira to USDT and e
 2. Install dependencies:
 
    ```bash
-   npm install
+   bun install
    ```
 
 3. Create a `.env` file in the root directory and add your environment variables (see [Configuration](#configuration)).
@@ -64,7 +66,7 @@ A simple and efficient service that enables users to convert Naira to USDT and e
 4. Start the server:
 
    ```bash
-   npm start
+   bun run index.js
    ```
 
 ## Configuration
