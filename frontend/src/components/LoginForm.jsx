@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
+import { InfoIcon, Loader } from "lucide-react"; // Import the loader icon
 import { useAccount, useSignMessage, usePublicClient } from "wagmi";
 import LoginButton from "@/components/LoginButton";
 import { useRouter } from "next/navigation";
@@ -17,11 +17,15 @@ export default function LoginForm() {
   const { signMessageAsync } = useSignMessage({});
   const client = usePublicClient();
   const router = useRouter();
+
   const [error, setError] = useState(null);
+  const [isRedirecting, setIsRedirecting] = useState(false); // New state for redirecting
 
   const handleWalletSignIn = async () => {
     try {
       setError(null); // Clear any previous errors
+      setIsRedirecting(false); // Reset redirect state
+
       const nonce = `${Date.now()}`;
       const statement = `Nonce: ${nonce}`;
       const message = createSiweMessage({
@@ -56,8 +60,16 @@ export default function LoginForm() {
 
       if (result.success) {
         const { exists } = await checkUserExists(address);
-        if (exists) router.push("/dashboard/" + address);
-        else router.push("/login");
+
+        // Show redirecting state
+        setIsRedirecting(true);
+
+        // Redirect to dashboard or login based on user existence
+        if (exists) {
+          router.push("/dashboard/" + address);
+        } else {
+          router.push("/signup");
+        }
       } else {
         setError("Signature verification failed: " + result.error);
       }
@@ -69,6 +81,7 @@ export default function LoginForm() {
       }
     }
   };
+
   return (
     <Card className="bg-white w-fit max-w-sm m-auto shadow-lg">
       <CardHeader>
@@ -93,8 +106,19 @@ export default function LoginForm() {
         {!isConnected ? (
           <LoginButton />
         ) : (
-          <Button onClick={handleWalletSignIn} className="w-fit mx-auto bg-primary text-primary-foreground hover:bg-primary/90">
-            Verify Wallet
+          <Button
+            onClick={handleWalletSignIn}
+            className="w-fit mx-auto bg-primary text-primary-foreground hover:bg-primary/90"
+            disabled={isRedirecting} // Disable button when redirecting
+          >
+            {isRedirecting ? (
+              <>
+                <Loader className="mr-2 h-4 w-4 animate-spin" /> {/* Spinner */}
+                Redirecting to dashboard...
+              </>
+            ) : (
+              "Verify Wallet"
+            )}
           </Button>
         )}
       </CardContent>
