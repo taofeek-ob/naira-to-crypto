@@ -130,7 +130,7 @@ app.post("/webhook", async (req, res) => {
       customer: { email },
     } = req.body.data;
 
-    const amountNaira = amount*1000; // Amount in Naira
+    const amountNaira = amount*100; // Amount in Naira
 
     // Retrieve user information from MongoDB using email
     const { _id, walletAddress } = await getUserByEmail(email);

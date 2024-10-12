@@ -62,7 +62,7 @@ const truncateWalletAddress = (address) => {
                 <TableRow>
                   <TableHead>#</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead> Naira Transferred *1000</TableHead>
+              <TableHead> Naira Transferred *100</TableHead>
               <TableHead> USDT Received</TableHead>
               <TableHead>Wallet Address</TableHead>
               <TableHead>Explorer</TableHead>
