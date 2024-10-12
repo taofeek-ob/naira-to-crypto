@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -82,3 +82,5 @@ export default async function TransactionsPage() {
     </>
   );
 }
+
+export const dynamic = 'force-dynamic'
