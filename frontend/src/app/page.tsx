@@ -33,7 +33,7 @@ export default function Home() {
                 <Link href="/login"> Get Started</Link>
               </Button >
               <Button variant="secondary">
-                <Link href="/transactions">Live Transactions</Link>
+                <Link href="/live-transactions">Live Transactions</Link>
               </Button>
             </div>
 

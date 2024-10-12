@@ -31,7 +31,7 @@ export default function SignUpForm() {
               log in
             </Link>{" "}
             to access dashboard or{" "}
-            <Link href="/transactions" className="font-medium underline hover:text-yellow-800">
+            <Link href="/live-transactions" className="font-medium underline hover:text-yellow-800">
               view live transactions
             </Link>
             .

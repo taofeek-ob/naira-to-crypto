@@ -223,6 +223,6 @@ async function executeTransfer(to, amountUSDT) {
 
 
 
-server.listen(port, () => {
+app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });

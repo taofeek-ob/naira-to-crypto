@@ -91,7 +91,7 @@ export default function LoginForm() {
     <Card className="bg-white w-fit max-w-sm m-auto shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-primary">Login</CardTitle>
-        <CardDescription className="text-secondary-foreground">Due to bvn regulations, import the wallet information below to login and access the dashboard or view <Link href="/transactions" className="underline">live transactions</Link></CardDescription>
+        <CardDescription className="text-secondary-foreground">Due to bvn regulations, import the wallet information below to login and access the dashboard or view <Link href="/live-transactions" className="underline">live transactions</Link></CardDescription>
       </CardHeader>
       <CardContent>
         <DemoTabs />
