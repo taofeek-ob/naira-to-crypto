@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
-import { NEXT_PUBLIC_URL } from "../config";
+
 
 import "./global.css";
 import "@coinbase/onchainkit/styles.css";
 import "@rainbow-me/rainbowkit/styles.css";
-
-import { ThemeProvider } from "@/app/theme-provider";
-
+import { Toaster } from "@/components/ui/toaster"
 import Footer from "@/components/layout/Footer";
 import dynamic from "next/dynamic";
 
@@ -34,12 +32,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html suppressHydrationWarning={true} lang="en">
       <body className={font.className} suppressHydrationWarning={true}>
-        <ThemeProvider>
-          <OnchainProviders>
-            {children}
-            <Footer />
-          </OnchainProviders>
-        </ThemeProvider>
+        <OnchainProviders>
+          {children}
+          <Footer />
+        </OnchainProviders>
+            <Toaster />
       </body>
     </html>
   );

@@ -11,7 +11,8 @@ import { useRouter } from "next/navigation";
 import { createSiweMessage } from "viem/siwe";
 import { baseSepolia } from "viem/chains";
 import { checkUserExists } from "../app/actions";
-
+import DemoTabs from "@/components/DemoTabs";
+import Link from "next/link";
 export default function LoginForm() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage({});
@@ -20,6 +21,7 @@ export default function LoginForm() {
 
   const [error, setError] = useState(null);
   const [isRedirecting, setIsRedirecting] = useState(false); // New state for redirecting
+  const [redirectText, setRedirectText] = useState(""); // New state for redirecting
 
   const handleWalletSignIn = async () => {
     try {
@@ -66,8 +68,11 @@ export default function LoginForm() {
 
         // Redirect to dashboard or login based on user existence
         if (exists) {
+          setRedirectText("dashboard");
           router.push("/dashboard/" + address);
         } else {
+          setRedirectText("SignUp");
+
           router.push("/signup");
         }
       } else {
@@ -86,16 +91,10 @@ export default function LoginForm() {
     <Card className="bg-white w-fit max-w-sm m-auto shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-primary">Login</CardTitle>
-        <CardDescription className="text-secondary-foreground">Due to bvn regulations, use the wallet information below to login</CardDescription>
+        <CardDescription className="text-secondary-foreground">Due to bvn regulations, import the wallet information below to login and access the dashboard or view <Link href="/transactions" className="underline">live transactions</Link></CardDescription>
       </CardHeader>
       <CardContent>
-        <Alert className="mb-4 bg-secondary text-secondary-foreground">
-          <InfoIcon className="h-4 w-4" />
-          <AlertTitle className="font-semibold">Demo Information</AlertTitle>
-          <AlertDescription>Wallet address: 0x1234...5678</AlertDescription>
-          <AlertDescription>Private key: abcd...efgh</AlertDescription>
-        </Alert>
-
+        <DemoTabs />
         {error && (
           <Alert variant="destructive" className="mb-4">
             <AlertTitle>Error</AlertTitle>
@@ -114,7 +113,7 @@ export default function LoginForm() {
             {isRedirecting ? (
               <>
                 <Loader className="mr-2 h-4 w-4 animate-spin" /> {/* Spinner */}
-                Redirecting to dashboard...
+                Redirecting to {redirectText}...
               </>
             ) : (
               "Verify Wallet"

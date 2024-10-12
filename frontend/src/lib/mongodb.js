@@ -40,4 +40,11 @@ async function getTransactionsByUserId(userId) {
   return Transaction.find({ userId });
 }
 
-export { connectToDatabase, getUserByWalletAddress, getTransactionsByUserId };
+async function getAllTransactions() {
+  await connectToDatabase();
+  
+  return Transaction.find().sort({ date: -1 });
+}
+
+
+export { getAllTransactions, connectToDatabase, getUserByWalletAddress, getTransactionsByUserId };

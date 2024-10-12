@@ -31,8 +31,10 @@ export default function Home() {
             <div className="flex flex-row justify-center items-center space-x-4 my-8">
               <Button>
                 <Link href="/login"> Get Started</Link>
+              </Button >
+              <Button variant="secondary">
+                <Link href="/transactions">Live Transactions</Link>
               </Button>
-              <Button variant="secondary">Learn More</Button>
             </div>
 
             <div className="absolute top-0 -z-10 max-h-full max-w-screen-lg w-full h-full blur-2xl">

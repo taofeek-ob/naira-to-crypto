@@ -7,15 +7,24 @@
 const express = require("express"); // For creating the Express app
 const nodemailer = require("nodemailer"); // For sending emails
 const { ethers, JsonRpcProvider } = require("ethers"); // For interacting with Ethereum blockchain
-import { getUserByEmail, saveTransaction } from "./lib/mongodb"; // MongoDB functions for user and transaction handling
+import { WebSocket } from "ws";
+const http = require("http");
+const cors = require("cors");
+const { Server } = require("socket.io");
+import { startTransactionWatcher, getUserByEmail, saveTransaction, getAllTransactions } from "./lib/mongodb"; // MongoDB functions for user and transaction handling
 const Safe = require("@safe-global/protocol-kit").default; // Gnosis Safe SDK
 
 // Initialize Express app
 const app = express();
 const port = process.env.PORT || 3000; // Define the port for the server
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
-// Middleware to parse JSON request bodies
-app.use(express.json());
+const wss = new WebSocket.Server({ server });
 
 // Environment variables for Gnosis Safe and Ethereum provider
 const safeAddress = process.env.SAFE_ADDRESS; // Your Gnosis Safe address
@@ -26,6 +35,26 @@ const usdtTokenAddress = process.env.USDT_TOKEN_ADDRESS; // USDT Token Contract 
 // Initialize Ethereum provider and signer
 const provider = new JsonRpcProvider(providerUrl);
 const signer = new ethers.Wallet(privateKey, provider);
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
+//
+
+// Initialize WebSocket server
+// WebSocket connection handler
+wss.on("connection", (ws) => {
+  console.log("Client connected");
+  ws.on("close", () => console.log("Client disconnected"));
+});
+
+// Broadcast to all connected WebSocket clients
+function broadcast(data) {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(data));
+    }
+  });
+}
 
 // Create a transporter using Mailtrap SMTP for email notifications
 const transporter = nodemailer.createTransport({
@@ -101,7 +130,7 @@ app.post("/webhook", async (req, res) => {
       customer: { email },
     } = req.body.data;
 
-    const amountNaira = amount; // Amount in Naira
+    const amountNaira = amount*1000; // Amount in Naira
 
     // Retrieve user information from MongoDB using email
     const { _id, walletAddress } = await getUserByEmail(email);
@@ -117,12 +146,13 @@ app.post("/webhook", async (req, res) => {
       userId: _id,
       amountNaira,
       amountUSDT,
+      walletAddress,
       transactionHash,
     };
     await saveTransaction(data); // Save transaction data
-
+    broadcast(data);
     // Send email notification to the user
-    sendEmail(email, transactionHash, amountNaira, amountUSDT, walletAddress);
+    sendEmail("taofeek01@yahoo.com", transactionHash, amountNaira, amountUSDT, walletAddress);
 
     // Respond with success
     res.status(200).send({
@@ -134,6 +164,7 @@ app.post("/webhook", async (req, res) => {
     res.status(500).send("Error processing webhook"); // Respond with an error message
   }
 });
+
 
 /**
  * Fetches the current USDT conversion rate from CoinGecko and converts Naira amount to USDT.
@@ -156,7 +187,7 @@ async function getUSDTConversion(nairaAmount) {
     console.log(`Current USDT to NGN rate: ${usdtRate}`);
 
     // Convert the Naira amount to USDT using the fetched rate
-    return (nairaAmount * 1000) / usdtRate; // Assume 1000 for conversion ratio as per business logic
+    return (nairaAmount) / usdtRate; // Assume 1000 for conversion ratio as per business logic
   } catch (err) {
     console.error("error:" + err); // Log any error that occurs
     throw new Error("Failed to fetch USDT conversion rate."); // Throw error if fetching fails
@@ -208,7 +239,12 @@ async function executeTransfer(to, amountUSDT) {
   };
 }
 
-// Start the Express server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`); // Log the server start message
+io.on("connection", (socket) => {
+  console.log("A client connected");
+
+  socket.on("disconnect", () => {
+    console.log("A client disconnected");
+  });
 });
+
+startTransactionWatcher(io, server, port);

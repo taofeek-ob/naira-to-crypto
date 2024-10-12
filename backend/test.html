@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Test</title>
+</head>
+<body>
+  <h1>WebSocket Test</h1>
+  <ul id="messages"></ul>
+  
+  <script>
+    // Connect to WebSocket server running on localhost
+    const ws = new WebSocket('ws://localhost:8000');
+    
+    // Log when WebSocket is connected
+    ws.onopen = () => {
+      console.log('Connected to WebSocket server');
+    };
+    
+    // Handle incoming messages
+    ws.onmessage = (event) => {
+      const message = event.data;
+      const messagesList = document.getElementById('messages');
+      const newItem = document.createElement('li');
+      newItem.textContent = `Received: ${message}`;
+      messagesList.appendChild(newItem);
+    };
+    
+    // Log any errors
+    ws.onerror = (error) => {
+      console.error('WebSocket Error: ', error);
+    };
+    
+    // Log when WebSocket is closed
+    ws.onclose = () => {
+      console.log('Disconnected from WebSocket server');
+    };
+  </script>
+</body>
+</html>

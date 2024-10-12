@@ -11,6 +11,10 @@ const transactionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+   walletAddress: {
+    type: String,
+    required: true,
+  },
   transactionHash: {
     type: String,
     required: true,

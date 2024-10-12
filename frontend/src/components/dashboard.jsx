@@ -9,7 +9,9 @@ export default function DashboardComponent({ user, transactions }) {
   // Calculate total balance
   const totalNaira = transactions.reduce((sum, tx) => sum + tx.amountNaira, 0);
   const totalUSDT = transactions.reduce((sum, tx) => sum + tx.amountUSDT, 0);
-
+const truncateWalletAddress = (address) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`
+  }
   return (
     <>
       <Navbar address={user.walletAddress} />
@@ -58,20 +60,22 @@ export default function DashboardComponent({ user, transactions }) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Amount (NGN)</TableHead>
-                  <TableHead>Amount (USDT)</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Action</TableHead>
+                  <TableHead>#</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead> Naira Transferred *1000</TableHead>
+              <TableHead> USDT Received</TableHead>
+              <TableHead>Wallet Address</TableHead>
+              <TableHead>Explorer</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {transactions.map((tx) => (
+                {transactions.map((tx,index) => (
                   <TableRow key={tx._id}>
+                    <TableCell>{index + 1}</TableCell>
                     <TableCell>{new Date(tx.date).toLocaleDateString()}</TableCell>
-                    <TableCell>{tx.amountNaira.toFixed(2)}</TableCell>
-                    <TableCell>{tx.amountUSDT.toFixed(2)}</TableCell>
-                    <TableCell>Completed</TableCell>
+                    <TableCell>₦{tx.amountNaira.toFixed(2)}</TableCell>
+                    <TableCell>${tx.amountUSDT.toFixed(2)}</TableCell>
+                    <TableCell>{truncateWalletAddress(tx.walletAddress)}</TableCell>
                     <TableCell>
                       <Button variant="link" asChild>
                         <Link href={`https://sepolia.basescan.org/tx/${tx.transactionHash}`} target="_blank" rel="noopener noreferrer">

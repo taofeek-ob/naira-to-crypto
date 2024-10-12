@@ -40,5 +40,31 @@ async function saveTransaction(data) {
   await connectToDatabase();
   return Transaction.create(data);
 }
+//Helper function to save a new transaction
+async function getAllTransactions() {
+  await connectToDatabase();
+  
+  return Transaction.find().sort({ date: -1 }).limit(100);
+}
 
-export { getUserByEmail, saveTransaction, connectToDatabase };
+
+// Helper function to start watching the transactions collection
+async function startTransactionWatcher(io, server, port) {
+  await connectToDatabase();
+
+  const collection = mongoose.connection.db.collection("transactions");
+  const changeStream = collection.watch();
+
+  changeStream.on("change", (change) => {
+    if (change.operationType === "insert") {
+      const newTransaction = change.fullDocument;
+      io.emit("newTransaction", newTransaction);
+    }
+  });
+
+  server.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
+
+export { getUserByEmail, saveTransaction, startTransactionWatcher, getAllTransactions };
