@@ -14,7 +14,7 @@ export default function LiveTransactions({ initialTransactions }) {
   const { toast } = useToast()
   const url =process.env.NEXT_PUBLIC_BACKEND_URL
   useEffect(() => {
-    const socket = io(url);
+    const socket = io(url, {forceNew: true});
 
     console.log("socket connected");
     socket.on("newTransaction", (newTransaction) => {
