@@ -14,10 +14,11 @@ export default function LiveTransactions({ initialTransactions }) {
   const { toast } = useToast()
   const url =process.env.NEXT_PUBLIC_BACKEND_URL
   useEffect(() => {
-    const socket = io(url, {forceNew: true});
+    const socket = io(url, { transports: ['websocket']});
 
     console.log("socket connected");
     socket.on("newTransaction", (newTransaction) => {
+      console.log("newTransaction", newTransaction);
       setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
 
       toast({
