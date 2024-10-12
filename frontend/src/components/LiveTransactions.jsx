@@ -8,29 +8,43 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useToast } from "@/components/hooks/use-toast"
-
+import * as Ably from 'ably';
 export default function LiveTransactions({ initialTransactions }) {
   const [transactions, setTransactions] = useState(initialTransactions);
   const { toast } = useToast()
   const url =process.env.NEXT_PUBLIC_BACKEND_URL
   useEffect(() => {
-    const socket = io(url, { transports: ['websocket']});
 
-    console.log("socket connected");
-    socket.on("newTransaction", (newTransaction) => {
-      console.log("newTransaction", newTransaction);
+    
+
+    // console.log("socket connected");
+    // socket.on("newTransaction", (newTransaction) => {
+    //   console.log("newTransaction", newTransaction);
+    //   setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
+
+    //   toast({
+    //     title: "New Transaction",
+    //     description: `Transaction for ₦${newTransaction.amountNaira} for $${newTransaction.amountUSDT} added.`,
+    //     duration: 5000, // Duration of toast in ms
+    //   });
+    // });
+
+ const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLY_API_KEY);
+
+    const channel = ably.channels.get('transactions-channel');
+
+    channel.subscribe('newTransaction', (message) => {
+      const newTransaction = message.data;
       setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
 
       toast({
-        title: "New Transaction",
-        description: `Transaction for ₦${newTransaction.amountNaira} for $${newTransaction.amountUSDT} added.`,
-        duration: 5000, // Duration of toast in ms
+        title: 'New Transaction',
+        description: `Transaction for ₦${newTransaction.amountNaira} added.`,
+        duration: 5000,
       });
     });
 
-    return () => {
-      socket.disconnect();
-    };
+   return () => channel.unsubscribe();
   }, []);
 
 const truncateWalletAddress = (address) => {

@@ -13,6 +13,8 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 import {  getUserByEmail, saveTransaction, getAllTransactions } from "./lib/mongodb"; // MongoDB functions for user and transaction handling
 const Safe = require("@safe-global/protocol-kit").default; // Gnosis Safe SDK
+const Ably = require('ably');
+
 
 // Initialize Express app
 const app = express();
@@ -35,6 +37,12 @@ const usdtTokenAddress = process.env.USDT_TOKEN_ADDRESS; // USDT Token Contract 
 // Initialize Ethereum provider and signer
 const provider = new JsonRpcProvider(providerUrl);
 const signer = new ethers.Wallet(privateKey, provider);
+
+
+const ably = new Ably.Realtime(process.env.ABLY_API_KEY);
+
+const channel = ably.channels.get('transactions-channel');
+
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
@@ -150,7 +158,8 @@ app.post("/webhook", async (req, res) => {
       transactionHash,
     };
     await saveTransaction(data); // Save transaction data
-    io.emit("newTransaction", data);
+    // io.emit("newTransaction", data);
+    channel.publish('newTransaction', data);
     console.log("emitted as socket")
     // broadcast(data);
     // Send email notification to the user
@@ -241,22 +250,22 @@ async function executeTransfer(to, amountUSDT) {
   };
 }
 
-io.on("connection", (socket) => {
-  console.log("A Client connected", socket.id);
+// io.on("connection", (socket) => {
+//   console.log("A Client connected", socket.id);
 
-  // Emit a test transaction event right after connection
-  socket.emit("newTransaction", {
-    amountNaira: 1234,
-    amountUSDT: 100,
-    date: new Date(),
-    walletAddress: "0x1234567890abcdef1234567890abcdef12345678",
-    transactionHash: "0x123abc...",
-  });
+//   // Emit a test transaction event right after connection
+//   socket.emit("newTransaction", {
+//     amountNaira: 1234,
+//     amountUSDT: 100,
+//     date: new Date(),
+//     walletAddress: "0x1234567890abcdef1234567890abcdef12345678",
+//     transactionHash: "0x123abc...",
+//   });
 
-  socket.on("disconnect", () => {
-    console.log("A client disconnected");
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("A client disconnected");
+//   });
+// });
 
 server.listen(port, () => {
     console.log(`Server running on port ${port}`);
