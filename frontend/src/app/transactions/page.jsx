@@ -4,6 +4,7 @@ import { InfoIcon } from "lucide-react";
 import LiveTransactions from "@/components/LiveTransactions";
 import { Suspense } from "react";
 import { getAllTransactions } from "@/lib/mongodb";
+import Navbar from "@/components/layout/Navbar";
 
 export default async function TransactionsPage() {
   const initialTransactions = await getAllTransactions();
@@ -26,10 +27,13 @@ export default async function TransactionsPage() {
   };
 
   return (
+    <>
+      <Navbar />
     <div className="container mx-auto p-4 space-y-8">
+      
       <Alert className="bg-blue-50 border-blue-200">
         <InfoIcon className="h-4 w-4 text-blue-500" />
-        <AlertTitle className="text-blue-700">Experience Real-Time USDT Conversion</AlertTitle>
+        <AlertTitle className="text-blue-700">Experience Real-Time Naira to USDT Conversion</AlertTitle>
         <AlertDescription className="text-blue-600">
           Witness the power of automated cryptocurrency conversion! Send a minimum of 120 Naira to either of the demo accounts below and watch as it's instantly converted to USDT. This live demonstration showcases our cutting-edge fintech solution for seamless fiat-to-crypto transactions.
         </AlertDescription>
@@ -71,6 +75,8 @@ export default async function TransactionsPage() {
           </Suspense>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    
+    </>
   );
 }
