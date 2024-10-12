@@ -49,22 +49,22 @@ async function getAllTransactions() {
 
 
 // Helper function to start watching the transactions collection
-async function startTransactionWatcher(io, server, port) {
-  await connectToDatabase();
+// async function startTransactionWatcher(io, server, port) {
+//   await connectToDatabase();
 
-  const collection = mongoose.connection.db.collection("transactions");
-  const changeStream = collection.watch();
+//   const collection = mongoose.connection.db.collection("transactions");
+//   const changeStream = collection.watch();
 
-  changeStream.on("change", (change) => {
-    if (change.operationType === "insert") {
-      const newTransaction = change.fullDocument;
-      io.emit("newTransaction", newTransaction);
-    }
-  });
+//   changeStream.on("change", (change) => {
+//     if (change.operationType === "insert") {
+//       const newTransaction = change.fullDocument;
+//       io.emit("newTransaction", newTransaction);
+//     }
+//   });
 
-  server.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
-}
+//   server.listen(port, () => {
+//     console.log(`Server running on port ${port}`);
+//   });
+// }
 
-export { getUserByEmail, saveTransaction, startTransactionWatcher, getAllTransactions };
+export { getUserByEmail, saveTransaction, getAllTransactions };

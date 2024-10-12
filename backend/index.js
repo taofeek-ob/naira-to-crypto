@@ -11,7 +11,7 @@ import { WebSocket } from "ws";
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-import { startTransactionWatcher, getUserByEmail, saveTransaction, getAllTransactions } from "./lib/mongodb"; // MongoDB functions for user and transaction handling
+import {  getUserByEmail, saveTransaction, getAllTransactions } from "./lib/mongodb"; // MongoDB functions for user and transaction handling
 const Safe = require("@safe-global/protocol-kit").default; // Gnosis Safe SDK
 
 // Initialize Express app
@@ -24,7 +24,7 @@ const io = new Server(server, {
   },
 });
 
-const wss = new WebSocket.Server({ server });
+// const wss = new WebSocket.Server({ server });
 
 // Environment variables for Gnosis Safe and Ethereum provider
 const safeAddress = process.env.SAFE_ADDRESS; // Your Gnosis Safe address
@@ -40,21 +40,21 @@ app.use(express.json());
 
 //
 
-// Initialize WebSocket server
-// WebSocket connection handler
-wss.on("connection", (ws) => {
-  console.log("Client connected");
-  ws.on("close", () => console.log("Client disconnected"));
-});
+// // Initialize WebSocket server
+// // WebSocket connection handler
+// wss.on("connection", (ws) => {
+//   console.log("Client connected");
+//   ws.on("close", () => console.log("Client disconnected"));
+// });
 
 // Broadcast to all connected WebSocket clients
-function broadcast(data) {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(data));
-    }
-  });
-}
+// function broadcast(data) {
+//   wss.clients.forEach((client) => {
+//     if (client.readyState === WebSocket.OPEN) {
+//       client.send(JSON.stringify(data));
+//     }
+//   });
+// }
 
 // Create a transporter using Mailtrap SMTP for email notifications
 const transporter = nodemailer.createTransport({
@@ -150,7 +150,9 @@ app.post("/webhook", async (req, res) => {
       transactionHash,
     };
     await saveTransaction(data); // Save transaction data
-    broadcast(data);
+    io.emit("newTransaction", data);
+    console.log("emitted as socket")
+    // broadcast(data);
     // Send email notification to the user
     sendEmail("taofeek01@yahoo.com", transactionHash, amountNaira, amountUSDT, walletAddress);
 
@@ -240,11 +242,22 @@ async function executeTransfer(to, amountUSDT) {
 }
 
 io.on("connection", (socket) => {
-  console.log("A client connected");
+  console.log("A Client connected", socket.id);
+
+  // Emit a test transaction event right after connection
+  socket.emit("newTransaction", {
+    amountNaira: 1234,
+    amountUSDT: 100,
+    date: new Date(),
+    walletAddress: "0x1234567890abcdef1234567890abcdef12345678",
+    transactionHash: "0x123abc...",
+  });
 
   socket.on("disconnect", () => {
     console.log("A client disconnected");
   });
 });
 
-startTransactionWatcher(io, server, port);
+server.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });

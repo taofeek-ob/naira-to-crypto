@@ -53,7 +53,7 @@ const truncateWalletAddress = (address) => {
           </TableHeader>
          <TableBody>
             {transactions.map((tx, index) => (
-              <TableRow key={tx._id}>
+              <TableRow key={index}>
                 {/* Wrap individual TableCell in motion.div */}
                 <motion.td
                   initial={{ opacity: 0, y: -10 }}
@@ -74,14 +74,14 @@ const truncateWalletAddress = (address) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <TableCell>₦{tx.amountNaira.toFixed(2)}</TableCell>
+                  <TableCell>₦{tx.amountNaira}</TableCell>
                 </motion.td>
                 <motion.td
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <TableCell>${tx.amountUSDT.toFixed(2)}</TableCell>
+                  <TableCell>${tx.amountUSDT}</TableCell>
                 </motion.td>
                 <motion.td
                   initial={{ opacity: 0, y: -10 }}
