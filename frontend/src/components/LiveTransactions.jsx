@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { io } from "socket.io-client";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,22 +11,10 @@ import * as Ably from 'ably';
 export default function LiveTransactions({ initialTransactions }) {
   const [transactions, setTransactions] = useState(initialTransactions);
   const { toast } = useToast()
-  const url =process.env.NEXT_PUBLIC_BACKEND_URL
   useEffect(() => {
 
     
 
-    // console.log("socket connected");
-    // socket.on("newTransaction", (newTransaction) => {
-    //   console.log("newTransaction", newTransaction);
-    //   setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
-
-    //   toast({
-    //     title: "New Transaction",
-    //     description: `Transaction for ₦${newTransaction.amountNaira} for $${newTransaction.amountUSDT} added.`,
-    //     duration: 5000, // Duration of toast in ms
-    //   });
-    // });
 
  const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLY_API_KEY);
 
@@ -37,10 +24,10 @@ export default function LiveTransactions({ initialTransactions }) {
       const newTransaction = message.data;
       setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
 
-      toast({
-        title: 'New Transaction',
-        description: `Transaction for ₦${newTransaction.amountNaira} added.`,
-        duration: 5000,
+       toast({
+        title: "New Transaction",
+        description: `Transaction for ₦${newTransaction.amountNaira} for $${newTransaction.amountUSDT} added.`,
+        duration: 5000, // Duration of toast in ms
       });
     });
 
