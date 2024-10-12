@@ -59,7 +59,7 @@
     "jsdom": "^24.1.0",
     "pino-pretty": "^10.2.0",
     "postcss": "^8.4.38",
-    "supports-color": "^9.4.0",
+    "supports-color": "8.1.1",
     "tailwindcss": "^3.4.0",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^14.2.0",
