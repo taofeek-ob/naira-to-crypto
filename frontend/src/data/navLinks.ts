@@ -4,8 +4,8 @@ export const navLinks = [
     href: "/",
   },
   {
-    title: "Features",
-    href: "/#features",
+    title: "Twitter",
+    href: "https://twitter.com/taofeek_ob",
   },
   {
     title: "Code",

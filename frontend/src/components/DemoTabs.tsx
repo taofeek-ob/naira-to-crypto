@@ -63,8 +63,8 @@ export default function DemoTabs() {
         </Alert>
         <Tabs defaultValue="account1" className="w-full mb-2">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="account1">Account 1</TabsTrigger>
-            <TabsTrigger value="account2">Account 2</TabsTrigger>
+            <TabsTrigger value="account1">nairatocrypto1.base.eth</TabsTrigger>
+            <TabsTrigger value="account2">nairatocrypto2.base.eth</TabsTrigger>
           </TabsList>
           <TabsContent value="account1">
             <div className="space-y-4">

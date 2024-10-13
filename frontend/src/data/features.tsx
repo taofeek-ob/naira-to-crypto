@@ -9,12 +9,12 @@ export const features = [
   },
   {
     title: "Transfer Funds",
-    description: "Easily transfer Naira and get crypto instantly. No hassle, no delays.",
+    description: "Transfer Naira to your unique bank account.",
     icon: <Pencil1Icon className="w-6 h-6" />,
   },
   {
     title: "Get Your Crypto",
-    description: "Receive your crypto and start trading right away—simple as ABC.",
+    description: "Receive your crypto in your registered wallet.",
     icon: <RocketIcon className="w-6 h-6" />,
   },
 ];

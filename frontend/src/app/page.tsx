@@ -13,7 +13,7 @@ export default function Home() {
       <Navbar />
       <div className="border-b border-border">
         <main className="container mx-auto">
-          <div className="relative md:mt-24 mx-auto w-full max-w-4xl pt-4 text-center">
+          <div className="relative md:mt-24 mx-auto w-full max-w-4xl text-center">
             <div className="justify-center hidden md:flex">
               <div className="flex flex-row items-center justify-center gap-5 p-1 text-xs bg-card/60 backdrop-blur-lg rounded-md border border-border">
                 <Badge className="font-semibold"> 🎉 New!</Badge>
@@ -26,12 +26,12 @@ export default function Home() {
             </div>
             <h1 className="md:text-7xl my-4 font-extrabold text-4xl md:leading-tight">Convert your naira to crypto through bank transfer</h1>
             <p className="mx-auto my-4 text-sm w-full max-w-xl text-center font-medium leading-relaxed tracking-wide">
-              Effortlessly exchange Naira for crypto in seconds on the base sepolia network.
+              Seamlessly exchange Naira for crypto in seconds on the base sepolia network—quick, secure, and hassle-free.
             </p>
             <div className="flex flex-row justify-center items-center space-x-4 my-8">
               <Button>
                 <Link href="/login"> Get Started</Link>
-              </Button >
+              </Button>
               <Button variant="secondary">
                 <Link href="/live-transactions">Live Transactions</Link>
               </Button>
