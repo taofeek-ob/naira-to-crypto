@@ -8,6 +8,6 @@ export async function GET(req) {
   if (isAuthenticated) {
     return NextResponse.json({ authenticated: true }, { status: 200 });
   } else {
-    return NextResponse.json({ authenticated: false }, { status: 401 });
+    return NextResponse.json({ authenticated: false }, { status: 200 });
   }
 }

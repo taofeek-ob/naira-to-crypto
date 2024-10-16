@@ -12,7 +12,7 @@ import {
   WalletDropdownFundLink,
   WalletDropdownLink,
 } from "@coinbase/onchainkit/wallet";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 type WalletWrapperParams = {
   text?: string;
@@ -23,8 +23,13 @@ type WalletWrapperParams = {
 export default function WalletWrapper({ className, text, withWalletAggregator = false }: WalletWrapperParams) {
   const { isConnected, address, isDisconnected } = useAccount();
   const router = useRouter();
+  const pathName = usePathname();
   useEffect(() => {
     const checkAuth = async () => {
+      const publicPaths = ["/signup"];
+      if (publicPaths.includes(pathName)) {
+        return;
+      }
       const res = await fetch("/api/checkAuth");
       const data = await res.json();
 
@@ -43,8 +48,6 @@ export default function WalletWrapper({ className, text, withWalletAggregator = 
           // If the wallet is disconnected and the user is authenticated
           await fetch("/api/logout", { method: "POST" });
         }
-        // Redirect to the home page
-        router.push("/login");
       }
     };
 

@@ -17,12 +17,10 @@ export default function SignUpForm() {
     <Card className="w-full max-w-md mx-auto bg-white shadow-lg">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center">Sign Up</CardTitle>
-        <CardDescription className="text-center">
-          Create an account to access our services
-        </CardDescription>
+        <CardDescription className="text-center">Create an account to access our services</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Alert variant="warning" className="bg-yellow-50 border-yellow-200">
+        {/* <Alert variant="warning" className="bg-yellow-50 border-yellow-200">
           <InfoIcon className="h-4 w-4 text-yellow-500" />
           <AlertTitle className="text-yellow-700">Registration Disabled</AlertTitle>
           <AlertDescription className="text-yellow-600">
@@ -36,7 +34,7 @@ export default function SignUpForm() {
             </Link>
             .
           </AlertDescription>
-        </Alert>
+        </Alert> */}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -73,9 +71,7 @@ export default function SignUpForm() {
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
-          
         </div>
-    
       </CardFooter>
     </Card>
   );
